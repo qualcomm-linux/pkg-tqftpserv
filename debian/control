@@ -1,0 +1,39 @@
+Source: tqftpserv
+Section: net
+Priority: optional
+Maintainer: Qualcomm Linux Maintainers <quic_linux@quicinc.com>
+Build-Depends: debhelper-compat (= 13),
+               debhelper (>= 13.11.6),
+               libqrtr-dev,
+               libzstd-dev,
+               meson,
+               pkgconf,
+               systemd-dev,
+Standards-Version: 4.7.4
+Rules-Requires-Root: no
+Homepage: https://github.com/linux-msm/tqftpserv
+Vcs-Git: https://github.com/qualcomm-linux/pkg-tqftpserv.git -b qcom/ubuntu/resolute
+Vcs-Browser: https://github.com/qualcomm-linux/pkg-tqftpserv/tree/qcom/ubuntu/resolute
+
+Package: tqftpserv
+Architecture: amd64 armhf arm64
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Description: TFTP server implementation for the QRTR protocol
+ TFTP server working over the QRTR protocol, enabling basic communication
+ with remote processors (Wi-Fi, modem, sensors...) found in recent
+ Qualcomm SoC's.
+
+Package: tqftpserv-udeb
+Build-Profiles: <!noudeb>
+Package-Type: udeb
+Section: debian-installer
+Architecture: amd64 armhf arm64
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Description: TFTP server implementation for the QRTR protocol
+ This is a udeb, or a microdeb, for the debian-installer.
+ .
+ TFTP server working over the QRTR protocol, enabling basic communication
+ with remote processors (Wi-Fi, modem, sensors...) found in recent
+ Qualcomm SoC's.

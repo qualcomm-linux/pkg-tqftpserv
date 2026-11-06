@@ -1,0 +1,49 @@
+# Maintainer Notes – pkg-tqftpserv
+
+## Component
+
+tqftpserv is a TFTP server that runs on top of the AF_QIPCRTR (QRTR) socket
+type. It serves files from the Linux filesystem to remote processors
+(modem, Wi-Fi, sensors, ...) on Qualcomm SoCs. This package is based on the
+Ubuntu resolute source package `tqftpserv 1.1.1-1`.
+
+## Upstream
+
+- Repository: https://github.com/linux-msm/tqftpserv
+- Branch: upstream/latest (tag `upstream/1.1.1`)
+- Packaging branch: qcom/ubuntu/resolute (ubuntu)
+- Upstream contact: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+## Maintainer
+
+Qualcomm Linux Team <linux-mainline@quicinc.com>
+
+## Build
+
+```bash
+# Clone and switch to packaging branch
+git clone https://github.com/qualcomm-linux/pkg-tqftpserv.git
+cd pkg-tqftpserv
+git checkout qcom/ubuntu/resolute
+
+# Install build dependencies (libqrtr-dev, libzstd-dev, meson, systemd-dev, ...)
+sudo apt-get build-dep .
+
+# Build
+gbp buildpackage --git-export-dir=../build-area
+```
+
+## Install and verify
+
+```bash
+sudo dpkg -i ../build-area/tqftpserv_1.1.1_arm64.deb
+systemctl status tqftpserv.service
+```
+
+## Notes
+
+- Packaging (control, rules, install files, udeb) is inherited from the Ubuntu
+  resolute `tqftpserv 1.1.1-1` source package; changelog history is preserved.
+- Changelog version is the bare upstream tag `1.1.1` per QLI Ubuntu convention.
+  Note that dpkg orders `1.1.1` *below* the archive's `1.1.1-1`.
+- Ubuntu branches do not use DEBUSINE CI; no debusine workflow stubs are added.

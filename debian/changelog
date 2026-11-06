@@ -1,0 +1,141 @@
+tqftpserv (1.1.1) UNRELEASED; urgency=medium
+
+  * Initial QLI packaging for qcom/ubuntu/resolute, based on the Ubuntu
+    resolute source package tqftpserv 1.1.1-1.
+  * d/control: set QLI maintainer, Vcs-* to qualcomm-linux/pkg-tqftpserv,
+    Standards-Version 4.7.4, Rules-Requires-Root: no.
+  * d/gbp.conf: qcom/ubuntu/resolute branch layout.
+
+ -- Qualcomm Linux Maintainers <quic_linux@quicinc.com>  Fri, 06 Nov 2026 14:53:16 +0530
+
+tqftpserv (1.1.1-1) unstable; urgency=medium
+
+  * New upstream version
+  * d/patches: drop upstreamed patches
+  * d/watch: convert to version 5
+  * d/control: drop unneeded fields.
+    As per Debian policy v4.7.3, `Priority: optional` is no longer needed.
+    Likewise, `Rules-Requires-Root: no` is now obsolete. Drop those fields
+    and bump Standards-Version accordingly.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 12 Jan 2026 10:12:35 +0100
+
+tqftpserv (1.1-4) unstable; urgency=medium
+
+  * d/control: only build for ARMv7+
+    This package is specifically aimed at supporting hardware features of
+    modern Qualcomm SoC's, which are all ARM-based (mostly `arm64`, but that
+    includes `armhf` parts such as e.g. MSM8916). There's no point shipping
+    this package on other architectures, so limit the list to `armhf` and
+    `arm64`, while keeping `amd64` as it greatly simplifies running CI and
+    debugging builds.
+  * d/patches: backport upstream service fix.
+    The QRTR nameserver has been built into the kernel for years now, so the
+    service no longer needs to depend on `qrtr-ns.service`. (Closes: #1104039)
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 19 May 2025 12:18:27 +0200
+
+tqftpserv (1.1-3) unstable; urgency=medium
+
+  * d/copyright: update upstream contact
+  * debian: add udeb package.
+    This makes it possible to include this package in debian-installer
+    images, allowing users to use remote processors (e.g. WiFi) when running
+    on Qualcomm-based hardware. (Closes: #1076725)
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 03 Feb 2025 17:04:56 +0100
+
+tqftpserv (1.1-2) unstable; urgency=medium
+
+  * d/patches: fix hasty copy/paste bug.
+    The patch tries to build the regular path from the full firmware path
+    (including filename) and appending `/<filename>` once again, leading to
+    an incorrect path such as `/lib/firmware/<path>/<filename>/<filename>`.
+    Fix this by using `firmware_path` instead of `firmware_value`.
+    (Closes: #1082675)
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Wed, 25 Sep 2024 08:52:02 +0200
+
+tqftpserv (1.1-1) unstable; urgency=medium
+
+  * New upstream version (Closes: #1076802)
+  * d/patches: update for new upstream version
+  * d/gbp.conf: use same defaults as other packages I maintain
+  * d/control: add missing build-dependencies.
+    This package now requires dev files for `libzstd` and `systemd` to be
+    available at build time. It also now uses `meson` for its build system,
+    which in turn relies on `pkgconf`, so let's add those too.
+    While at it, bump Standards-Version as no other change is needed.
+  * d/rules: drop overrides.
+    This package switched to using `meson` as its build system, so we can
+    simplify our `d/rules` and just drop our overrides.
+  * debian: update upstream repo URL
+    This repo has been moved to the `linux-msm` group, let's reflect that in
+    our package.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Wed, 28 Aug 2024 13:02:13 +0200
+
+tqftpserv (1.0-5) unstable; urgency=medium
+
+  * Upload to unstable
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Tue, 02 Jan 2024 09:26:34 +0100
+
+tqftpserv (1.0-5~exp1) experimental; urgency=medium
+
+  * d/gbp.conf: use 'debian/experimental' as debian branch
+  * debian: keep systemd service under /usr.
+    In the current state of the Debian "/usr merge", we are allowed to move
+    systemd services under `/usr/lib/systemd` when relying on
+    `dh_installsystemd`. This requires adding a versioned dependency on
+    `debhelper`.
+    Let's comply by no longer moving `/usr/lib` to `/`.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 30 Oct 2023 17:19:50 +0100
+
+tqftpserv (1.0-4) unstable; urgency=medium
+
+  [ Dmitry Baryshkov ]
+  * d/patches: don't call dirname second time
+    dirname modifies passed argument, so don't call it again. Instead
+    concatenating firmware_value would result in the proper path being
+    constructed.
+    (Closes: #1030973)
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Fri, 10 Feb 2023 09:02:00 +0100
+
+tqftpserv (1.0-3) unstable; urgency=medium
+
+  * d/patches: lookup firmware files under /lib/firmware/updates
+    `/lib/firmware/updates` is a legitimate location for firmware files,
+    `tqftpserv` should look there as well.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Thu, 09 Feb 2023 19:53:43 +0100
+
+tqftpserv (1.0-2) unstable; urgency=medium
+
+  * d/rules: install service file under `/lib/systemd`
+    `debhelper` looks for service files under `/lib/systemd`, but ignores
+    those installed under `/usr/lib/systemd`, so we need to install our
+    service file to the former location to have it auto-enabled on install.
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Wed, 11 Jan 2023 00:16:00 +0100
+
+tqftpserv (1.0-1) unstable; urgency=medium
+
+  * New upstream version 1.0
+  * d/control: bump Standards-Version, no change required
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Tue, 03 Jan 2023 10:39:18 +0100
+
+tqftpserv (0.0+git20200207-2) unstable; urgency=medium
+
+  * Source-only upload to allow transitioning to testing
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Thu, 04 Aug 2022 13:19:32 +0200
+
+tqftpserv (0.0+git20200207-1) unstable; urgency=medium
+
+  * Initial Debian packaging (Closes: #1016013)
+
+ -- Arnaud Ferraris <aferraris@debian.org>  Mon, 25 Jul 2022 13:49:30 +0200
