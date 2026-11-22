@@ -1,0 +1,39 @@
+From b87c1754a3711ac7a0c9dab339896a7b9aea42b9 Mon Sep 17 00:00:00 2001
+From: Bhaskar Valaboju <bhaskar.valaboju@oss.qualcomm.com>
+Date: Wed, 22 Apr 2026 19:23:42 +0530
+Subject: [PATCH] BACKPORT: tftp: ACK short DATA packets in WRQ window mode
+
+This change is required in the Resolute tqftpserv package for proper
+Wi-Fi functionality. Therefore, backport the change to Ubuntu Resolute,
+which uses tqftpserv v1.1.1.
+
+Link: https://github.com/linux-msm/tqftpserv/pull/37/
+Signed-off-by: Bhaskar Valaboju <bhaskar.valaboju@oss.qualcomm.com>
+Signed-off-by: Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
+Origin: backport, https://github.com/linux-msm/tqftpserv/pull/37
+Bug: https://github.com/linux-msm/tqftpserv/pull/37
+Forwarded: not-needed
+Last-Update: 2026-04-22
+---
+ tqftpserv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/tqftpserv.c b/tqftpserv.c
+index 9f7c15b..5d231aa 100644
+--- a/tqftpserv.c
++++ b/tqftpserv.c
+@@ -576,8 +576,9 @@ static int handle_writer(struct tftp_client *client)
+ 	memcpy(client->rw_buf + client->blk_offset, buf, payload);
+ 	client->blk_offset += payload;
+ 
+-	/* Write to file if all the wsize blocks are recieved */
+-	if (block % client->wsize == 0) {
++	/* Write to file if all the wsize blocks are recieved
++	 * or received buffer that is less than blksize */
++	if ((block % client->wsize == 0) || (payload < client->blksize)) {
+ 		ret = write(client->fd, client->rw_buf, client->blk_offset);
+ 		if (ret < 0) {
+ 			/* XXX: report error */
+-- 
+2.34.1
+

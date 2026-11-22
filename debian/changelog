@@ -1,3 +1,10 @@
+tqftpserv (1.1.1-1) UNRELEASED; urgency=medium
+
+  * d/patches: add ack-short-wrq-data.patch, backporting an upstream fix
+    (tqftpserv!37) needed for correct Wi-Fi TFTP transfers on Resolute.
+
+ -- Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>  Tue, 24 Nov 2026 12:25:58 +0530
+
 tqftpserv (1.1.1) UNRELEASED; urgency=medium
 
   * Initial QLI packaging for qcom/ubuntu/resolute, based on the Ubuntu
