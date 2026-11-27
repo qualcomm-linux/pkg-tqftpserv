@@ -1,10 +1,10 @@
-tqftpserv (1.1.1-1qcom1) UNRELEASED; urgency=medium
+tqftpserv (1.1.1-1qcom1) resolute; urgency=medium
 
   [ Pradeep P V K ]
   * d/patches: add ack-short-wrq-data.patch, backporting an upstream fix
     (tqftpserv!37) needed for correct Wi-Fi TFTP transfers on Resolute.
 
- -- Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>  Tue, 24 Nov 2026 21:49:59 +0000
+ -- GitHub Service Bot <githubservice@qti.qualcomm.com>  Fri, 27 Nov 2026 18:02:21 +0000
 
 tqftpserv (1.1.1-1) resolute; urgency=medium
 
