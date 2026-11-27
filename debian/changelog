@@ -1,8 +1,10 @@
-tqftpserv (1.1.1-2~) UNRELEASED; urgency=medium
+tqftpserv (1.1.1-1qcom1) UNRELEASED; urgency=medium
 
-  * WIP — update changelog before next release
+  [ Pradeep P V K ]
+  * d/patches: add ack-short-wrq-data.patch, backporting an upstream fix
+    (tqftpserv!37) needed for correct Wi-Fi TFTP transfers on Resolute.
 
- -- Qualcomm Linux Maintainers <quic_linux@quicinc.com>  Tue, 24 Nov 2026 21:49:59 +0000
+ -- Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>  Tue, 24 Nov 2026 21:49:59 +0000
 
 tqftpserv (1.1.1-1) resolute; urgency=medium
 
